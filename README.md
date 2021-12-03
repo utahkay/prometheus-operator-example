@@ -40,4 +40,5 @@ kubectl apply -f alertmanager.yaml -n monitoring
 ```
 
 ## Notes
-Outside of local development you'll probably need a clusterrole, clusterrolebinding, and service account for Prometheus. 
+* Outside of local development you'll probably need a clusterrole, clusterrolebinding, and service account for Prometheus. 
+* The storage class in prometheus.yaml is hostpath for Docker Desktop. If you're not on Docker Desktop you may need to use a different storage class.
