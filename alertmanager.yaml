@@ -1,0 +1,12 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Alertmanager
+metadata:
+  name: my-alertmanager
+spec:
+  alertmanagerConfigNamespaceSelector: {}
+  alertmanagerConfigSelector:
+    matchLabels:
+      alertmanagerConfig: my-alertmanager
+  logLevel: info
+  portName: web
+  replicas: 1

@@ -1,0 +1,40 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: my-prometheus
+spec:
+  additionalScrapeConfigs:
+    key: scrape-config.yaml
+    name: my-prometheus-additional-scrape-configs
+  alerting:
+    alertmanagers:
+    - name: alertmanager-operated
+      namespace: monitoring
+      port: web
+  enableAdminAPI: false
+  replicas: 1
+  resources:
+    limits:
+      cpu: 200m
+      memory: 1G
+  retention: 7d
+  ruleSelector:
+    matchLabels:
+      app: my-prometheus
+  scrapeInterval: 15s
+  serviceAccountName: default
+  serviceMonitorSelector:
+    matchLabels:
+      dummy: notusingservicemonitorsbutthisconfigsettingisrequired  
+  storage:
+    volumeClaimTemplate:
+      metadata: {}
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 40Gi
+        storageClassName: hostpath
+      status: {}      
+

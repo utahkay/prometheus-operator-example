@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: my-prometheus
+  name: prometheus-rule
+spec:
+  groups:
+  - name: example
+    rules:
+    - alert: High request latency for POST
+      annotations:
+        description: 90th percentile POST duration > 0.05
+        summary: High 90th percentile POST latency
+      expr: histogram_quantile(0.9, sum (rate(codelab_api_request_duration_seconds_bucket{method="POST"}[1m])) by (le))  > 0.05
+      labels:
+        severity: slack
+        namespace: monitoring

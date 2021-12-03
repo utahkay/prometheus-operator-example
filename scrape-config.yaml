@@ -1,0 +1,20 @@
+- job_name: kubernetes-pods
+  honor_timestamps: true
+  scrape_interval: 15s
+  metrics_path: /metrics
+  scheme: http
+  follow_redirects: true
+  kubernetes_sd_configs:
+  - role: pod
+    kubeconfig_file: ""
+    follow_redirects: true
+    namespaces:
+      names:
+      - monitoring
+    selectors:
+    - role: pod
+      label: app=example-app
+- job_name: 'prometheus'
+  scrape_interval: 15s
+  static_configs:
+    - targets: ['localhost:9090']      
